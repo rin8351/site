@@ -1,0 +1,74 @@
+{% load static %}
+{% load i18n %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Radio Télévision Libre des Mémoire</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="day-mode">
+
+  <header>
+    <button class="theme-switcher" id="theme-switcher">{% trans "Сменить тему" %} </button>
+    <form action="/i18n/setlang/" method="post">
+      {% csrf_token %}
+      <input name="next" type="hidden" value="{{ redirect_to }}" />
+      <select name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+          {% for lang in LANGUAGES %}
+              <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected {% endif %}>
+                  {{ lang.1 }}
+              </option>
+          {% endfor %}
+      </select>
+      <input type="submit" value="Change Language">
+  </form>
+  </header>
+
+  <main>
+    <h1>{% trans "О сайте" %}</h1>
+
+    <p>{{ description|linebreaksbr }}</p>
+    <a href="https://www.mysite" class="special-link">mysite</a>
+  </main>
+
+  <footer>
+
+    <a href="https://www.patreon.com" class="image-link">
+        <img src="{% static 'img/pat.png' %}" alt="Patreon">
+    </a>
+    <a href="https://t.me/your_channel" class="image-link">
+        <img src="{% static 'img/tel.png' %}" alt="Telegram">
+    </a>  
+
+  </footer>
+  <script>
+    const themeSwitcher = document.getElementById('theme-switcher');
+    const currentTheme = localStorage.getItem('theme');
+  
+    if (currentTheme) {
+      document.body.classList.add(currentTheme);
+    }
+  
+    themeSwitcher.addEventListener('click', function() {
+      if(document.body.classList.contains('day-mode')) {
+        document.body.classList.remove('day-mode');
+        document.body.classList.add('night-mode');
+        } else {
+        document.body.classList.remove('night-mode');
+        document.body.classList.add('day-mode');
+        }
+      let theme = 'day-mode';
+      if (document.body.classList.contains('night-mode')) {
+        theme = 'night-mode';
+      }
+      localStorage.setItem('theme', theme);
+    });
+  </script>
+  
+</body>
+</html>
