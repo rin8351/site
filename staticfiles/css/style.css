@@ -1,0 +1,194 @@
+/* Стили для шапки */
+header {
+    background-color: #ddd;
+    height: 60px; 
+    display: flex;
+    justify-content: flex-end; 
+  }
+
+  .theme-switcher {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+  } 
+  
+  .theme-switcher:hover {
+    cursor: pointer;
+    text-decoration: underline; 
+  }
+  
+  /* Стили для основного контента */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-family: sans-serif;  
+  }
+  
+  p {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  /* Стили для подвала */  
+  footer {
+    background-color: #ddd;
+    height: 60px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+  }
+  
+  a {
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+  }
+
+  .special-link {
+    font-size: 20px; /* Пример размера для .special-link */
+  }
+  
+
+  footer a {
+    padding: 10px;
+    color: blue;
+    text-decoration: none;
+  }
+  
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  footer img {
+    height: 50px;
+    opacity: 0.8; 
+  }
+  
+  footer img:hover {
+    opacity: 1;
+  }
+
+body.day-mode {
+  background-color: white;
+  color: black;
+}
+
+body.night-mode {
+  background-color: black;
+  color: white;
+}
+
+/* Стиль для формы выбора языка */
+form[action="/i18n/setlang/"] {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Регулируйте отступ по своему усмотрению */
+}
+
+/* Стиль для селектора языка */
+form[action="/i18n/setlang/"] select {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+}
+
+/* Стиль для кнопки смены языка */
+form[action="/i18n/setlang/"] input[type="submit"] {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ddd;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form[action="/i18n/setlang/"] input[type="submit"]:hover {
+  background-color: #bbb;
+}
+
+/* Стиль для кнопки "Сменить тему" */
+.theme-switcher {
+  padding: 5px 15px;
+  margin-left: 10px; /* Отступ слева, регулируйте по своему усмотрению */
+  border: none;
+  border-radius: 5px;
+  background-color: #ddd; /* Цвет фона */
+  color: black; /* Цвет текста */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.theme-switcher:hover {
+  background-color: #bbb; /* Цвет фона при наведении */
+}
+
+.special-link {
+  color: #007bff; /* Яркий синий, но можно выбрать любой цвет */
+  text-decoration: none; /* Убирает подчеркивание */
+  transition: color 0.3s ease; /* Плавное изменение цвета при наведении */
+}
+
+.special-link:hover {
+  color: #0056b3; /* Темно-синий при наведении */
+  text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.special-link:focus {
+  outline: none; /* Убрать стандартный контур */
+  background-color: #f8f9fa; /* Светлый фон при фокусе */
+}
+
+.special-link:active {
+  color: #0056b3; /* Цвет при активации */
+}
+
+a:not(.image-link) {
+  /* Общие стили для всех ссылок, кроме .image-link */
+  color: #333;
+  text-decoration: none;
+}
+
+a:not(.image-link):hover {
+  /* Стили для наведения на все ссылки, кроме .image-link */
+  text-decoration: underline;
+}
+
+.image-link img {
+  height: 50px; /* Установите желаемый размер */
+  opacity: 0.8;
+}
+
+.image-link:hover img {
+  opacity: 1;
+}
+
+/* Цвета ссылок для дневного режима */
+.day-mode a {
+  color: #007bff; /* Яркий синий для дневного режима */
+}
+
+.day-mode a:hover {
+  color: #0056b3; /* Темно-синий при наведении в дневном режиме */
+}
+
+/* Цвета ссылок для ночного режима */
+.night-mode a {
+  color: #9ecbff; /* Более светлый синий для ночного режима */
+}
+
+.night-mode a:hover {
+  color: #6ea8d4; /* Средне-синий при наведении в ночном режиме */
+}
