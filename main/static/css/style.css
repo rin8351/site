@@ -33,6 +33,8 @@ header {
     font-family: Arial, sans-serif;
     font-size: 18px;
     line-height: 1.5;
+    text-align: justify;
+    word-break: break-word;
   }
   
   /* Стили для подвала */  
@@ -191,4 +193,26 @@ a:not(.image-link):hover {
 
 .night-mode a:hover {
   color: #6ea8d4; /* Средне-синий при наведении в ночном режиме */
+}
+
+@media (max-width: 600px) {
+  header {
+    font-size: 20px; /* Увеличенный размер шрифта для мобильных устройств */
+  }
+  footer {
+    font-size: 20px; /* Увеличенный размер шрифта для мобильных устройств */
+  }
+  .theme-switcher, form[action="/i18n/setlang/"] select, form[action="/i18n/setlang/"] input[type="submit"] {
+    font-size: 16px; /* Адаптивный размер шрифта для элементов управления */
+  }
+  .image-link img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 10px; /* Меньшие отступы на мобильных устройствах */
+  }
 }
