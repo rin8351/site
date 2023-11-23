@@ -18,7 +18,10 @@
 <body class="day-mode">
 
   <header>
-    <button class="theme-switcher" id="theme-switcher">{% trans "Сменить тему" %} </button>
+    <div class="theme-switcher" id="theme-switcher">
+      <img src="{% static 'img/day.png' %}" alt="Дневной режим" id="sun-icon" style="display: none;">
+      <img src="{% static 'img/night.png' %}" alt="Ночной режим" id="moon-icon">
+    </div>
     <form action="/i18n/setlang/" method="post">
       {% csrf_token %}
       <input name="next" type="hidden" value="{{ redirect_to }}" />
@@ -53,27 +56,39 @@
 
   </footer>
   <script>
-    const themeSwitcher = document.getElementById('theme-switcher');
+        const themeSwitcher = document.getElementById('theme-switcher');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
     const currentTheme = localStorage.getItem('theme');
-  
+
     if (currentTheme) {
       document.body.classList.add(currentTheme);
+      updateThemeIcons(currentTheme);
     }
-  
+
     themeSwitcher.addEventListener('click', function() {
+      let theme = 'day-mode';
       if(document.body.classList.contains('day-mode')) {
         document.body.classList.remove('day-mode');
         document.body.classList.add('night-mode');
-        } else {
+        theme = 'night-mode';
+      } else {
         document.body.classList.remove('night-mode');
         document.body.classList.add('day-mode');
-        }
-      let theme = 'day-mode';
-      if (document.body.classList.contains('night-mode')) {
-        theme = 'night-mode';
       }
       localStorage.setItem('theme', theme);
+      updateThemeIcons(theme);
     });
+
+    function updateThemeIcons(theme) {
+      if (theme === 'night-mode') {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    }
   </script>
   
 </body>

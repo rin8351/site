@@ -32,10 +32,6 @@ msgstr "Російська"
 msgid "Ukrainian"
 msgstr "Українська"
 
-#: main/templates/main/index.html:22
-msgid "Сменить тему"
-msgstr "Змінити тему"
-
 #: main/templates/main/index.html:40
 msgid "О сайте"
 msgstr "Про сайт"

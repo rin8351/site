@@ -18,8 +18,5 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Сменить тему"
-msgstr "Change  theme"
-
 msgid "О сайте"
 msgstr "About the site"
