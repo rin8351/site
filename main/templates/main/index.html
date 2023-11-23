@@ -56,15 +56,19 @@
 
   </footer>
   <script>
-        const themeSwitcher = document.getElementById('theme-switcher');
-    const sunIcon = document.getElementById('sun-icon');
-    const moonIcon = document.getElementById('moon-icon');
-    const currentTheme = localStorage.getItem('theme');
+      const themeSwitcher = document.getElementById('theme-switcher');
+      const sunIcon = document.getElementById('sun-icon');
+      const moonIcon = document.getElementById('moon-icon');
+      let currentTheme = localStorage.getItem('theme');
 
-    if (currentTheme) {
-      document.body.classList.add(currentTheme);
-      updateThemeIcons(currentTheme);
+    // Устанавливаем дневной режим по умолчанию, если тема не была сохранена
+    if (!currentTheme) {
+      currentTheme = 'day-mode';
+      localStorage.setItem('theme', currentTheme);
     }
+
+    document.body.classList.add(currentTheme);
+    updateThemeIcons(currentTheme);
 
     themeSwitcher.addEventListener('click', function() {
       let theme = 'day-mode';
@@ -89,6 +93,7 @@
         moonIcon.style.display = 'none';
       }
     }
+
   </script>
   
 </body>
