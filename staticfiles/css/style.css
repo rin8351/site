@@ -3,7 +3,8 @@ header {
   background-color: #ddd;
   height: 60px; 
   display: flex;
-  justify-content: flex-end; 
+  justify-content: space-between;
+  align-items: center;
 }
 
 .theme-switcher {
@@ -46,6 +47,16 @@ footer {
   justify-content: center;
 }
 
+footer .image-link img {
+  height: 40px; /* или другой желаемый размер */
+  width: auto; /* сохраняет пропорции изображения */
+  opacity: 0.8;
+}
+
+footer .image-link:hover img {
+  opacity: 1;
+}
+
 a {
   color: #333;
   text-decoration: none;
@@ -65,11 +76,6 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
-}
-
-footer img {
-  height: 50px;
-  opacity: 0.8; 
 }
 
 footer img:hover {
@@ -195,25 +201,29 @@ color: #9ecbff; /* Более светлый синий для ночного р
 color: #6ea8d4; /* Средне-синий при наведении в ночном режиме */
 }
 
+.theme-switcher {
+cursor: pointer;
+/* Остальные стили для .theme-switcher */
+}
+
+.theme-switcher img {
+height: 30px; /* Установите подходящий размер, согласованный с высотой шапки */
+width: auto;
+cursor: pointer;
+}
+
+
 @media (max-width: 600px) {
 header {
   font-size: 20px; /* Увеличенный размер шрифта для мобильных устройств */
   justify-content: space-between; /* Равномерное распределение элементов */
   flex-wrap: wrap; /* Перенос элементов на новую строку при необходимости */
 }
-footer {
-  font-size: 20px; /* Увеличенный размер шрифта для мобильных устройств */
-}
 .theme-switcher, form[action="/i18n/setlang/"] select, form[action="/i18n/setlang/"] input[type="submit"] {
   font-size: 16px; /* Адаптивный размер шрифта для элементов управления */
-  flex-basis: 100%; /* Заставляем элементы занимать всю ширину */
   text-align: center; /* Центрирование текста в элементах */
   padding: 5px 10px; /* Уменьшаем padding */
   margin: 10px auto; /* Добавляем отступ сверху и снизу, центрируем */
-}
-.image-link img {
-  max-width: 100%;
-  height: auto;
 }
 }
 
