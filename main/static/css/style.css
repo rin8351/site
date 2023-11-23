@@ -14,11 +14,7 @@ header {
     font-size: 18px;
   } 
   
-  .theme-switcher:hover {
-    cursor: pointer;
-    text-decoration: underline; 
-  }
-  
+
   /* Стили для основного контента */
   main {
     max-width: 100%;
@@ -48,7 +44,7 @@ header {
   }
 
   footer .image-link img {
-    height: 40px; /* или другой желаемый размер */
+    height: 50px; /* или другой желаемый размер */
     width: auto; /* сохраняет пропорции изображения */
     opacity: 0.8;
   }
@@ -137,10 +133,6 @@ form[action="/i18n/setlang/"] input[type="submit"]:hover {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.theme-switcher:hover {
-  background-color: #bbb; /* Цвет фона при наведении */
 }
 
 .special-link {
