@@ -12,14 +12,13 @@ RUN pip install -r requirements.txt
 RUN apt-get update && apt-get install -y gettext
 
 # Скопируйте файлы проекта в контейнер
-COPY . .
+# COPY . .
 
 EXPOSE 443
 #EXPOSE 8000
 
 
 RUN python manage.py collectstatic --noinput --clear
-
 
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:443"]
 
