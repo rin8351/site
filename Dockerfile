@@ -18,7 +18,7 @@ EXPOSE 443
 #EXPOSE 8000
 
 
-RUN python manage.py collectstatic --noinput --clear
+# RUN python manage.py collectstatic --noinput --clear
 
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:443"]
 
