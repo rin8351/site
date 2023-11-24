@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Radio Télévision Libre des Mémoire</title>
+  <title>RTML</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
@@ -39,7 +39,7 @@
   </header>
 
   <main>
-    <h1>{% trans "О сайте" %}</h1>
+    <h1>Radio Télévision Libre des Mémoire</h1>
 
     <p>{{ description|linebreaksbr }}</p>
     <a href="https://www.mysite" class="special-link">mysite</a>
@@ -56,12 +56,11 @@
 
   </footer>
   <script>
-      const themeSwitcher = document.getElementById('theme-switcher');
-      const sunIcon = document.getElementById('sun-icon');
-      const moonIcon = document.getElementById('moon-icon');
-      let currentTheme = localStorage.getItem('theme');
+    const themeSwitcher = document.getElementById('theme-switcher');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
+    let currentTheme = localStorage.getItem('theme');
 
-    // Устанавливаем дневной режим по умолчанию, если тема не была сохранена
     if (!currentTheme) {
       currentTheme = 'day-mode';
       localStorage.setItem('theme', currentTheme);
@@ -71,7 +70,7 @@
     updateThemeIcons(currentTheme);
 
     themeSwitcher.addEventListener('click', function() {
-      let theme = 'day-mode';
+      let theme;
       if(document.body.classList.contains('day-mode')) {
         document.body.classList.remove('day-mode');
         document.body.classList.add('night-mode');
@@ -79,6 +78,7 @@
       } else {
         document.body.classList.remove('night-mode');
         document.body.classList.add('day-mode');
+        theme = 'day-mode';
       }
       localStorage.setItem('theme', theme);
       updateThemeIcons(theme);

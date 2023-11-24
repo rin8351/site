@@ -31,7 +31,3 @@ msgstr "Російська"
 #: chronocast/settings.py:33
 msgid "Ukrainian"
 msgstr "Українська"
-
-#: main/templates/main/index.html:40
-msgid "О сайте"
-msgstr "Про сайт"

@@ -21,6 +21,3 @@ msgstr ""
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 #: chronocast/settings.py:31
 
-msgid "About the site"
-msgstr "О сайте"
-
