@@ -56,43 +56,35 @@
 
   </footer>
   <script>
-    const themeSwitcher = document.getElementById('theme-switcher');
-    const sunIcon = document.getElementById('sun-icon');
-    const moonIcon = document.getElementById('moon-icon');
-    let currentTheme = localStorage.getItem('theme');
+  document.addEventListener('DOMContentLoaded', function() {
+  const themeSwitcher = document.getElementById('theme-switcher');
+  const sunIcon = document.getElementById('sun-icon');
+  const moonIcon = document.getElementById('moon-icon');
+  let currentTheme = localStorage.getItem('theme') || 'day-mode';
 
-    if (!currentTheme) {
-      currentTheme = 'day-mode';
-      localStorage.setItem('theme', currentTheme);
+  updateTheme(currentTheme);
+
+  themeSwitcher.addEventListener('click', function() {
+    currentTheme = currentTheme === 'day-mode' ? 'night-mode' : 'day-mode';
+    localStorage.setItem('theme', currentTheme);
+    updateTheme(currentTheme);
+  });
+
+  function updateTheme(theme) {
+    if (theme === 'night-mode') {
+      document.body.classList.remove('day-mode');
+      document.body.classList.add('night-mode');
+      sunIcon.style.display = 'none';
+      moonIcon.style.display = 'block';
+    } else {
+      document.body.classList.remove('night-mode');
+      document.body.classList.add('day-mode');
+      sunIcon.style.display = 'block';
+      moonIcon.style.display = 'none';
     }
+  }
+});
 
-    document.body.classList.add(currentTheme);
-    updateThemeIcons(currentTheme);
-
-    themeSwitcher.addEventListener('click', function() {
-      let theme;
-      if(document.body.classList.contains('day-mode')) {
-        document.body.classList.remove('day-mode');
-        document.body.classList.add('night-mode');
-        theme = 'night-mode';
-      } else {
-        document.body.classList.remove('night-mode');
-        document.body.classList.add('day-mode');
-        theme = 'day-mode';
-      }
-      localStorage.setItem('theme', theme);
-      updateThemeIcons(theme);
-    });
-
-    function updateThemeIcons(theme) {
-      if (theme === 'night-mode') {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-      } else {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
-      }
-    }
 
   </script>
   
