@@ -6,7 +6,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>RTLM</title>
+  <title>RTML</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
@@ -45,14 +45,25 @@
   </div>
 
   <div class="text-block">  
-    <h1>Откуда берется датасет</h1>
+    <h1>{% trans "Откуда берется датасет" %}</h1>
+    <a href="https://www.1tv.ru/live" class="image-link">
+      <img src="{% static 'img/1tv.png' %}" alt="1tv">
+    </a>
 
-    <p>описание каналов</p>
+    <a href="https://www.tvr.by/televidenie/belarus-1" class="image-link">
+      <img src="{% static 'img/belarus-1.png' %}" alt="belarus-1">
+    </a>
+
+    <a href="https://1plus1.video/tvguide/1plus1/online" class="image-link">
+      <img src="{% static 'img/1plus1.png' %}" alt="1plus1">
+    </a>
+
+    <p>{{ links|linebreaksbr }}</p>
   </div>
 
   <div class="text-block">  
-    <p>Здесь ссылка для скачивания датасета</p>
-    <a href="https://www.mysite" class="special-link">Здесь</a>
+    <p>{% trans "Здесь ссылка для скачивания датасета" %}</p>
+    <a href="https://www.mysite" class="special-link">{% trans "Здесь" %}</a>
   </div>
   </main>
 

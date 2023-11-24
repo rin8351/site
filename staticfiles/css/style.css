@@ -28,6 +28,13 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* небольшая тень для эффекта "всплытия" */
 }
 
+body.night-mode .text-block {
+  background-color: #333; /* Тёмный фон для блока */
+  color: #fff; /* Светлый текст */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Более заметная тень для контраста */
+}
+
+
 /* Стили для основного контента */
 main {
   max-width: 100%;
@@ -41,7 +48,7 @@ h1 {
 
 p {
   font-family: Arial, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.5;
   text-align: justify;
   word-break: break-word;
