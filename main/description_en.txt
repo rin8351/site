@@ -1,24 +1,8 @@
-Here is the translation of the provided text into English:
-
-"There is a well-founded hypothesis that mass media significantly influence the perceptions and behaviors of their audiences.
+There is a well-founded hypothesis that mass media significantly influence the perceptions and behaviors of their audiences.
 
 The recording and text conversion of some popular media channels is done automatically, contributing to an open dataset.
 
-***
-ORT
-***
-Belarus 1
-***
-1 + 1
-***
-
 The presence of a particular channel in the archive does not imply an automatic judgment about its content or influence. The main task is to provide researchers with a diverse and unbiased dataset. It would be a mistake to compare different media from different historical eras, so in the same historical period, carnivorous ones are placed next to herbivorous ones. However, everything changes. The direction and magnitude of changes will be revealed through analysis.
-
-***
-
-Dataset link
-
-***
 
 During the genocide in Rwanda in 1994, the radio station Radio Télévision Libre des Mille Collines (RTLMC) was used as a powerful tool for spreading hate and inciting violence against the Tutsis and moderate Hutus. This station, broadcasting extremist rhetoric and false information, played a crucial role in fueling the flames of the genocide, which resulted in the deaths of hundreds of thousands of innocent people.
 
