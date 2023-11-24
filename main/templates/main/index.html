@@ -22,19 +22,18 @@
       <img src="{% static 'img/day.png' %}" alt="Дневной режим" id="sun-icon" style="display: none;">
       <img src="{% static 'img/night.png' %}" alt="Ночной режим" id="moon-icon">
     </div>
-    <form action="/i18n/setlang/" method="post">
-      {% csrf_token %}
-      <input name="next" type="hidden" value="{{ redirect_to }}" />
-      <select name="language">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-          {% for lang in LANGUAGES %}
-              <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected {% endif %}>
-                  {{ lang.1 }}
-              </option>
-          {% endfor %}
-      </select>
-      <input type="submit" value="Change Language">
+<form action="/i18n/setlang/" method="post" id="language-form">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}" />
+    <select name="language" id="language-select">
+      {% get_current_language as LANGUAGE_CODE %}
+      {% get_available_languages as LANGUAGES %}
+        {% for lang in LANGUAGES %}
+            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected {% endif %}>
+                {{ lang.1 }}
+            </option>
+        {% endfor %}
+    </select>
   </form>
   </header>
 
@@ -87,6 +86,13 @@
 
 
   </script>
-  
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var languageSelect = document.getElementById('language-select');
+        languageSelect.addEventListener('change', function() {
+          this.form.submit();
+        });
+      });
+    </script>
 </body>
 </html>
