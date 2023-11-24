@@ -28,12 +28,12 @@ LANGUAGES = [
     ('uk', _('Ukrainian')),
 ]
 
-ALLOWED_HOSTS = ['rtlm.info']
-#ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'rtlm.info',
+    'www.rtlm.info'
+    ]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
