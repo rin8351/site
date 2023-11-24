@@ -30,7 +30,8 @@ LANGUAGES = [
 
 ALLOWED_HOSTS = [
     'rtlm.info',
-    'www.rtlm.info'
+    'www.rtlm.info',
+    '34.118.89.125'
     ]
 
 # Application definition
