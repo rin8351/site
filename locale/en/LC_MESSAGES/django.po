@@ -17,3 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "Откуда берется датасет"
+msgstr "Where does the dataset come from?"
+
+
+msgid "Здесь"
+msgstr "Here"
+
+msgid "Здесь ссылка для скачивания датасета"
+msgstr "Here is the link to download the dataset"

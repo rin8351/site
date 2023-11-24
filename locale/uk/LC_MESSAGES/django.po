@@ -31,3 +31,13 @@ msgstr "Російська"
 #: chronocast/settings.py:33
 msgid "Ukrainian"
 msgstr "Українська"
+
+msgid "Откуда берется датасет"
+msgstr "Звідки береться датасет"
+
+
+msgid "Здесь"
+msgstr "Тут"
+
+msgid "Здесь ссылка для скачивания датасета"
+msgstr "Тут посилання для скачування датасету"

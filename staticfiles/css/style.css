@@ -7,6 +7,11 @@ header {
   align-items: center;
 }
 
+body {
+  background-color: #f5f5f5; /* светло-серый фон */
+}
+
+
 .theme-switcher {
   background: none;
   border: none;
@@ -14,6 +19,14 @@ header {
   font-size: 18px;
 } 
 
+.text-block {
+  background-color: white;
+  border-radius: 15px; /* овальные углы */
+  padding: 20px;
+  margin: 20px auto; /* центрирование блока */
+  max-width: 800px; /* или другая максимальная ширина */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* небольшая тень для эффекта "всплытия" */
+}
 
 /* Стили для основного контента */
 main {

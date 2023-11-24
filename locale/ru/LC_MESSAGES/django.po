@@ -21,3 +21,12 @@ msgstr ""
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 #: chronocast/settings.py:31
 
+msgid "Where does the dataset come from?"
+msgstr "Откуда берется датасет"
+
+
+msgid "Here"
+msgstr "Здесь"
+
+msgid "Here is the link to download the dataset"
+msgstr "Здесь ссылка для скачивания датасета"
