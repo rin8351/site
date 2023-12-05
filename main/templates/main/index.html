@@ -80,15 +80,14 @@
         <img src="{% static 'img/rossia.png' %}" alt="ros1">
       </a>
       <p>
-        текст
+        <!-- We need to put two last paragraphs from description, in different languages numbers of letters is different, in russian it's 934, in EN it's 943, in ukranian it's 941 -->
         https://storage.googleapis.com/rtlm/2023_russiaone.zip
+        {{ds|linebreaksbr}}
       </p>
     </div>
 
     <div class="text-block">
       <p>
-        <!-- We need to put two last paragraphs from description, not first 100 letters, but 934 last letters -->
-        {{ description|slice:"-934:"|linebreaksbr }}
       </p>
     </div>
   </div>
