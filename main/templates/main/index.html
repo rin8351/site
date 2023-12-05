@@ -87,8 +87,8 @@
 
     <div class="text-block">
       <p>
-        <!-- We need to put two last paragraphs from description -->
-        {{ description|linebreaksbr|truncatewords:100|safe }}
+        <!-- We need to put two last paragraphs from description, not first 100 letters, but 934 last letters -->
+        {{ description|slice:"-934:"|linebreaksbr }}
       </p>
     </div>
   </div>
