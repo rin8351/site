@@ -1,5 +1,1 @@
-There is a well-founded hypothesis that mass media significantly influence the perceptions and behaviors of their audiences.
-
-The recording and text conversion of some popular media channels is done automatically, contributing to an open dataset.
-
-The presence of a particular channel in the archive does not imply an automatic judgment about its content or influence. The main task is to provide researchers with a diverse and unbiased dataset. It would be a mistake to compare different media from different historical eras, so in the same historical period, carnivorous ones are placed next to herbivorous ones. However, everything changes. The direction and magnitude of changes will be revealed through analysis.
+Analyze, build models, experiment. This dataset has been converted from voice to text using the Whisper large model.
