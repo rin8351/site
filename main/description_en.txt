@@ -1,1 +1,1 @@
-Analyze, build models, experiment. This dataset has been converted from voice to text using the Whisper large model.
+We are reflecting what we digest.
