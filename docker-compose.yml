@@ -8,6 +8,8 @@ services:
     # command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/usr/src/app
+      - /etc/letsencrypt/live/rtlm.info/fullchain.pem:/usr/src/app/cert/fullchain.pem
+      - /etc/letsencrypt/live/rtlm.info/privkey.pem:/usr/src/app/cert/privkey.pem
     ports:
       - "443:443"
       #- "8000:8000"
