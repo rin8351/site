@@ -131,18 +131,28 @@
                         method: 'POST',
                         headers: {
                             'X-CSRFToken': csrfToken,
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                         },
                         body: JSON.stringify({ searchTerm: searchTerm.trim() })
                     });
 
                     console.log('Response status:', response.status);
-                    console.log('Response headers:', response.headers);
+                    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
                     
+                    const contentType = response.headers.get('content-type');
+                    console.log('Content-Type:', contentType);
+
                     const responseText = await response.text();
                     console.log('Raw response:', responseText);
                     
-                    if (!response.ok) throw new Error('Search failed');
+                    if (!response.ok) {
+                        throw new Error(`Search failed: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('Server returned non-JSON response');
+                    }
                     
                     const results = JSON.parse(responseText);
                     console.log('Parsed results:', results);
@@ -150,7 +160,8 @@
                     setData(results);
                 } catch (err) {
                     console.error('Search error:', err);
-                    setError(err.message);
+                    setError(`Error: ${err.message}`);
+                    setData([]);
                 } finally {
                     setIsLoading(false);
                 }

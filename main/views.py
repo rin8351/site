@@ -7,6 +7,8 @@ from google.cloud import bigquery
 from datetime import datetime, timedelta
 import logging
 import json
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 def index(request):
     current_language = get_language()
@@ -27,33 +29,43 @@ def index(request):
     context = {'description': description, 'links': links, 'ds': ds}
     return render(request, 'main/index.html', context)
 
+@require_http_methods(["POST"])
+@ensure_csrf_cookie
 def search_words(request):
     logger = logging.getLogger(__name__)
     try:
         logger.info('Received search request')
         logger.debug(f'Request method: {request.method}')
-        logger.debug(f'Request headers: {request.headers}')
-        logger.debug(f'Request body: {request.body}')
+        logger.debug(f'Content-Type: {request.headers.get("Content-Type")}')
+        logger.debug(f'Accept: {request.headers.get("Accept")}')
+        logger.debug(f'Request body: {request.body.decode()}')
         
-        if request.method != 'POST':
-            logger.warning(f'Invalid method: {request.method}')
-            return JsonResponse({'error': 'Method not allowed'}, status=405)
-        
-        # Try both JSON and form data
+        # Ensure we're dealing with JSON
+        if not request.headers.get('Content-Type', '').startswith('application/json'):
+            logger.error('Invalid Content-Type')
+            return JsonResponse(
+                {'error': 'Content-Type must be application/json'}, 
+                status=400
+            )
+
         try:
             data = json.loads(request.body)
             search_term = data.get('searchTerm', '').strip()
             logger.info(f'Got search term from JSON: {search_term}')
-        except json.JSONDecodeError:
-            search_term = request.POST.get('searchTerm', '').strip()
-            logger.info(f'Got search term from POST: {search_term}')
+        except json.JSONDecodeError as e:
+            logger.error(f'JSON decode error: {str(e)}')
+            return JsonResponse(
+                {'error': 'Invalid JSON format'}, 
+                status=400
+            )
         
         if not search_term:
             logger.warning('Empty search term')
-            return JsonResponse([])
+            return JsonResponse([], safe=False)
 
         # Create a list of words from the search term
         search_words = search_term.lower().split()
+        logger.debug(f'Search words: {search_words}')
         
         # Create conditions for each word
         word_conditions = []
@@ -61,6 +73,7 @@ def search_words(request):
             word_conditions.append(f"STRPOS(LOWER(transcript_text), LOWER('{word}')) > 0")
         
         word_condition = ' AND '.join(word_conditions)
+        logger.debug(f'Word condition: {word_condition}')
         
         # Calculate date range (last 30 days)
         end_date = datetime.now()
@@ -88,6 +101,7 @@ def search_words(request):
         GROUP BY date
         ORDER BY date
         """
+        logger.debug(f'Query: {query}')
 
         client = bigquery.Client(project="usavm-334506")
         query_job = client.query(query)
@@ -100,8 +114,14 @@ def search_words(request):
         logger.info(f'Found {len(results)} results')
         logger.debug(f'First result: {results[0] if results else None}')
         
-        return JsonResponse(results, safe=False)
+        response = JsonResponse(results, safe=False)
+        response['Content-Type'] = 'application/json'
+        return response
 
     except Exception as e:
         logger.error(f'Error in search_words: {str(e)}', exc_info=True)
-        return JsonResponse({'error': str(e)}, status=500)
+        return JsonResponse(
+            {'error': str(e)}, 
+            status=500, 
+            content_type='application/json'
+        )
