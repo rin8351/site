@@ -123,9 +123,8 @@
                 e.preventDefault();
                 setIsLoading(true);
                 setError(null);
-
-                const formData = new FormData();
-                formData.append('searchTerm', searchTerm.trim());
+                
+                console.log('Sending search request:', searchTerm);
 
                 try {
                     const response = await fetch('/api/search', {
@@ -137,10 +136,20 @@
                         body: JSON.stringify({ searchTerm: searchTerm.trim() })
                     });
 
+                    console.log('Response status:', response.status);
+                    console.log('Response headers:', response.headers);
+                    
+                    const responseText = await response.text();
+                    console.log('Raw response:', responseText);
+                    
                     if (!response.ok) throw new Error('Search failed');
-                    const results = await response.json();
+                    
+                    const results = JSON.parse(responseText);
+                    console.log('Parsed results:', results);
+                    
                     setData(results);
                 } catch (err) {
+                    console.error('Search error:', err);
                     setError(err.message);
                 } finally {
                     setIsLoading(false);

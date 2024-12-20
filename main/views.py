@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from google.cloud import bigquery
 from datetime import datetime, timedelta
 import logging
+import json
 
 def index(request):
     current_language = get_language()
@@ -27,12 +28,28 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 def search_words(request):
+    logger = logging.getLogger(__name__)
     try:
+        logger.info('Received search request')
+        logger.debug(f'Request method: {request.method}')
+        logger.debug(f'Request headers: {request.headers}')
+        logger.debug(f'Request body: {request.body}')
+        
         if request.method != 'POST':
+            logger.warning(f'Invalid method: {request.method}')
             return JsonResponse({'error': 'Method not allowed'}, status=405)
-            
-        search_term = request.POST.get('searchTerm', '').strip()
+        
+        # Try both JSON and form data
+        try:
+            data = json.loads(request.body)
+            search_term = data.get('searchTerm', '').strip()
+            logger.info(f'Got search term from JSON: {search_term}')
+        except json.JSONDecodeError:
+            search_term = request.POST.get('searchTerm', '').strip()
+            logger.info(f'Got search term from POST: {search_term}')
+        
         if not search_term:
+            logger.warning('Empty search term')
             return JsonResponse([])
 
         # Create a list of words from the search term
@@ -80,7 +97,11 @@ def search_words(request):
         for row in results:
             row['date'] = row['date'].isoformat()
 
+        logger.info(f'Found {len(results)} results')
+        logger.debug(f'First result: {results[0] if results else None}')
+        
         return JsonResponse(results, safe=False)
 
     except Exception as e:
+        logger.error(f'Error in search_words: {str(e)}', exc_info=True)
         return JsonResponse({'error': str(e)}, status=500)
