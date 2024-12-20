@@ -39,6 +39,7 @@ def search_words(request):
         logger.debug(f'Content-Type: {request.headers.get("Content-Type")}')
         logger.debug(f'Accept: {request.headers.get("Accept")}')
         logger.debug(f'Request body: {request.body.decode()}')
+        logger.debug(f'GOOGLE_APPLICATION_CREDENTIALS: {os.getenv("GOOGLE_APPLICATION_CREDENTIALS")}')
         
         # Ensure we're dealing with JSON
         if not request.headers.get('Content-Type', '').startswith('application/json'):
@@ -62,6 +63,16 @@ def search_words(request):
         if not search_term:
             logger.warning('Empty search term')
             return JsonResponse([], safe=False)
+
+        try:
+            client = bigquery.Client(project="usavm-334506")
+            logger.info('BigQuery client created successfully')
+        except Exception as e:
+            logger.error(f'Error creating BigQuery client: {str(e)}', exc_info=True)
+            return JsonResponse(
+                {'error': 'Failed to initialize BigQuery client'}, 
+                status=500
+            )
 
         # Create a list of words from the search term
         search_words = search_term.lower().split()
@@ -103,10 +114,17 @@ def search_words(request):
         """
         logger.debug(f'Query: {query}')
 
-        client = bigquery.Client(project="usavm-334506")
-        query_job = client.query(query)
-        results = [dict(row) for row in query_job]
-        
+        try:
+            query_job = client.query(query)
+            results = [dict(row) for row in query_job]
+            logger.info(f'Query executed successfully, found {len(results)} results')
+        except Exception as e:
+            logger.error(f'Error executing BigQuery query: {str(e)}', exc_info=True)
+            return JsonResponse(
+                {'error': 'Failed to execute search query'}, 
+                status=500
+            )
+
         # Convert dates to string format for JSON serialization
         for row in results:
             row['date'] = row['date'].isoformat()
@@ -116,6 +134,7 @@ def search_words(request):
         
         response = JsonResponse(results, safe=False)
         response['Content-Type'] = 'application/json'
+        logger.debug(f'Response headers: {dict(response.items())}')
         return response
 
     except Exception as e:

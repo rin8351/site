@@ -10,8 +10,10 @@ services:
       - .:/usr/src/app
       - /etc/letsencrypt/live/rtlm.info/fullchain.pem:/usr/src/app/cert/fullchain.pem
       - /etc/letsencrypt/live/rtlm.info/privkey.pem:/usr/src/app/cert/privkey.pem
+      - ./google-credentials.json:/usr/src/app/google-credentials.json
     ports:
       - "443:443"
       #- "8000:8000"
     environment:
       - DEBUG=0
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/google-credentials.json

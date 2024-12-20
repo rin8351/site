@@ -144,13 +144,15 @@
                     console.log('Content-Type:', contentType);
 
                     const responseText = await response.text();
-                    console.log('Raw response:', responseText);
+                    console.log('Raw response text:', responseText.substring(0, 1000));
                     
                     if (!response.ok) {
                         throw new Error(`Search failed: ${response.status} ${response.statusText}`);
                     }
                     
                     if (!contentType || !contentType.includes('application/json')) {
+                        console.error('Invalid content type:', contentType);
+                        console.error('Response preview:', responseText.substring(0, 200));
                         throw new Error('Server returned non-JSON response');
                     }
                     
