@@ -132,8 +132,9 @@
                         method: 'POST',
                         headers: {
                             'X-CSRFToken': csrfToken,
+                            'Content-Type': 'application/json'
                         },
-                        body: formData
+                        body: JSON.stringify({ searchTerm: searchTerm.trim() })
                     });
 
                     if (!response.ok) throw new Error('Search failed');
