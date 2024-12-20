@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 # Non-localized URLs (like API endpoints)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/search', include('main.urls')),
+    path('api/', include('main.urls')),  # just 'api/' here
 ]
 
 # Add localized URLs
