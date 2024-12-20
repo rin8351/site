@@ -8,6 +8,7 @@
   <meta charset="UTF-8">
   <title>RTLM</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
@@ -91,6 +92,96 @@
     <div class="text-block">
       <p>{{ ds|linebreaksbr }}</p>
     </div>
+  </div>
+
+  <div class="text-block">
+    <h2>{% trans "Word Search" %}</h2>
+    <div id="search-root"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/victory/dist/victory.min.js"></script>
+    
+    {% csrf_token %}
+    <script>
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
+        const WordSearchViz = () => {
+            const [searchTerm, setSearchTerm] = React.useState('');
+            const [data, setData] = React.useState([]);
+            const [isLoading, setIsLoading] = React.useState(false);
+            const [error, setError] = React.useState(null);
+
+            const colors = {
+                'ORT': '#264653',
+                'belarusone': '#2A9D8F',
+                'oneplusone': '#E9C46A',
+                'russiaone': '#E63946'
+            };
+
+            const handleSearch = async (e) => {
+                e.preventDefault();
+                setIsLoading(true);
+                setError(null);
+
+                const formData = new FormData();
+                formData.append('searchTerm', searchTerm.trim());
+
+                try {
+                    const response = await fetch('/api/search', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken,
+                        },
+                        body: formData
+                    });
+
+                    if (!response.ok) throw new Error('Search failed');
+                    const results = await response.json();
+                    setData(results);
+                } catch (err) {
+                    setError(err.message);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            return React.createElement('div', { className: 'search-container' },
+                React.createElement('form', { onSubmit: handleSearch },
+                    React.createElement('input', {
+                        type: 'text',
+                        value: searchTerm,
+                        onChange: (e) => setSearchTerm(e.target.value),
+                        placeholder: 'Enter search terms...',
+                        className: 'search-input'
+                    }),
+                    React.createElement('button', {
+                        type: 'submit',
+                        disabled: isLoading
+                    }, isLoading ? 'Searching...' : 'Search')
+                ),
+                error && React.createElement('div', { className: 'error' }, error),
+                data.length > 0 && React.createElement(Victory.VictoryChart, {
+                    scale: { x: "time" },
+                    containerComponent: React.createElement(Victory.VictoryVoronoiContainer)
+                },
+                    Object.keys(colors).map(channel => 
+                        React.createElement(Victory.VictoryLine, {
+                            key: channel,
+                            data: data.map(d => ({
+                                x: new Date(d.date),
+                                y: d[channel]
+                            })),
+                            style: { data: { stroke: colors[channel] } }
+                        })
+                    )
+                )
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('search-root'));
+        root.render(React.createElement(WordSearchViz));
+    </script>
   </div>
 
   </main>

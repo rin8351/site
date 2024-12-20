@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),  # Пример URL-пути к домашней странице
+    path('api/search', views.search_words, name='search_words'),
 ]
