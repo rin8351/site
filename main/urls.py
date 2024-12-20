@@ -3,12 +3,8 @@ from . import views
 
 app_name = 'main'
 
-# Non-localized URLs
+# All URL patterns
 urlpatterns = [
-    path('api/search', views.search_words, name='search_words'),
-]
-
-# Localized URLs - these will be included in i18n_patterns
-localized_urlpatterns = [
     path('', views.index, name='index'),
+    path('api/search', views.search_words, name='search_words'),
 ]

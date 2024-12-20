@@ -20,16 +20,16 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Non-localized URLs (like API endpoints)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Include non-localized URLs
-    path('', include('main.urls')),
+    path('api/search', include('main.urls')),
 ]
 
 # Add localized URLs
 urlpatterns += i18n_patterns(
-    # Include localized URLs
-    path('', include('main.localized_urlpatterns')),
+    path('', include('main.urls')),
+    prefix_default_language=False,
 )
 
 if settings.DEBUG:
