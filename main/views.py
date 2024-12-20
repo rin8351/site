@@ -10,7 +10,10 @@ import json
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
 
+logger = logging.getLogger(__name__)
+
 def index(request):
+    logger.info('Index view called')
     current_language = get_language()
     base_dir = os.path.join(settings.BASE_DIR, 'main')
     file_path = os.path.join(base_dir, f'description_{current_language}.txt')
@@ -32,7 +35,7 @@ def index(request):
 @require_http_methods(["POST"])
 @ensure_csrf_cookie
 def search_words(request):
-    logger = logging.getLogger(__name__)
+    logger.info('Search view called')
     try:
         logger.info('Received search request')
         logger.debug(f'Request method: {request.method}')
