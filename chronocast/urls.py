@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('main.urls')),  # just 'api/' here
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 # Add localized URLs

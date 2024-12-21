@@ -38,7 +38,7 @@
   </header>
 
   <main>
-    <div class="text-block">  
+    <div class="text-block" style="text-align: center;">  
     <h1>Radio Télévision Libre des Mémoire</h1>
     <p>{{ description|linebreaksbr }}</p>
   </div>
@@ -177,7 +177,7 @@
                         type: 'text',
                         value: searchTerm,
                         onChange: (e) => setSearchTerm(e.target.value),
-                        placeholder: 'Enter search terms...',
+                        placeholder: 'Enter word or sentence...',
                         className: 'search-input'
                     }),
                     React.createElement('button', {
