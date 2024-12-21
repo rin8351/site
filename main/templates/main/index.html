@@ -43,57 +43,6 @@
     <p>{{ description|linebreaksbr }}</p>
   </div>
 
-  <div>  
-    <div class="text-block">
-      <a href="https://www.1tv.ru/live" class="image-link">
-        <img src="{% static 'img/1tv.png' %}" alt="1tv">
-      </a>
-      <p>
-        <a href="https://storage.googleapis.com/rtlm/2023_ORT.zip">2023.11.05 - 2024 # ORT</a>
-      </p>
-    </div>
-
-    <div class="text-block">
-      <a href="https://www.tvr.by/televidenie/belarus-1" class="image-link">
-        <img src="{% static 'img/belarus-1.png' %}" alt="belarus-1">
-      </a>
-      <p>
-        <a href="https://storage.googleapis.com/rtlm/2023_belarusone.zip">2023.11.12 - 2024 # Belarus 1</a>
-      </p>
-    </div>
-
-    <div class="text-block">
-      <a href="https://1plus1.video/tvguide/1plus1/online" class="image-link">
-        <img src="{% static 'img/1plus1.png' %}" alt="1plus1">
-      </a>
-      <p>
-        <a href="https://storage.googleapis.com/rtlm/2023_oneplusone.zip">2023.11.12 - 2024 # 1+1</a>
-      </p>
-    </div>
-
-    <div class="text-block">
-      <a href="https://smotrim.ru/live/63254" class="image-link">
-        <img src="{% static 'img/rossia.png' %}" alt="ros1">
-      </a>
-      <p>
-        <a href="https://storage.googleapis.com/rtlm/2023_russiaone.zip">2023.11.26 - 2024 # Russia 1</a>
-      </p>
-    </div>
-
-    <div class="text-block">
-      <p>
-        Colab samples:<br>
-        <a href="https://colab.research.google.com/drive/1R5AtTIYjtWmcKIqbgJS08Rl7IkmyCrEs?usp=sharing">Text search colab</a>
-        <br>
-        Instruction at <a href="https://youtu.be/qBTsEPCBc0Q">Youtube</a>
-      </p>
-    </div>
-
-    <div class="text-block">
-      <p>{{ ds|linebreaksbr }}</p>
-    </div>
-  </div>
-
   <div class="text-block">
     <h2>{% trans "Word Search" %}</h2>
     <div id="search-root"></div>
@@ -252,6 +201,57 @@
         const root = ReactDOM.createRoot(document.getElementById('search-root'));
         root.render(React.createElement(WordSearchViz));
     </script>
+  </div>
+
+  <div>  
+    <div class="text-block">
+      <a href="https://www.1tv.ru/live" class="image-link">
+        <img src="{% static 'img/1tv.png' %}" alt="1tv">
+      </a>
+      <p>
+        <a href="https://storage.googleapis.com/rtlm/2023_ORT.zip">2023.11.05 - 2024 # ORT</a>
+      </p>
+    </div>
+
+    <div class="text-block">
+      <a href="https://www.tvr.by/televidenie/belarus-1" class="image-link">
+        <img src="{% static 'img/belarus-1.png' %}" alt="belarus-1">
+      </a>
+      <p>
+        <a href="https://storage.googleapis.com/rtlm/2023_belarusone.zip">2023.11.12 - 2024 # Belarus 1</a>
+      </p>
+    </div>
+
+    <div class="text-block">
+      <a href="https://1plus1.video/tvguide/1plus1/online" class="image-link">
+        <img src="{% static 'img/1plus1.png' %}" alt="1plus1">
+      </a>
+      <p>
+        <a href="https://storage.googleapis.com/rtlm/2023_oneplusone.zip">2023.11.12 - 2024 # 1+1</a>
+      </p>
+    </div>
+
+    <div class="text-block">
+      <a href="https://smotrim.ru/live/63254" class="image-link">
+        <img src="{% static 'img/rossia.png' %}" alt="ros1">
+      </a>
+      <p>
+        <a href="https://storage.googleapis.com/rtlm/2023_russiaone.zip">2023.11.26 - 2024 # Russia 1</a>
+      </p>
+    </div>
+
+    <div class="text-block">
+      <p>
+        Colab samples:<br>
+        <a href="https://colab.research.google.com/drive/1R5AtTIYjtWmcKIqbgJS08Rl7IkmyCrEs?usp=sharing">Text search colab</a>
+        <br>
+        Instruction at <a href="https://youtu.be/qBTsEPCBc0Q">Youtube</a>
+      </p>
+    </div>
+
+    <div class="text-block">
+      <p>{{ ds|linebreaksbr }}</p>
+    </div>
   </div>
 
   </main>
