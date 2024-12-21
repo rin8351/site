@@ -185,7 +185,7 @@
                         type: 'text',
                         value: searchTerm,
                         onChange: (e) => setSearchTerm(e.target.value),
-                        placeholder: 'Enter word or sentence...',
+                        placeholder: 'Enter word in cyrillic letters...',
                         className: 'search-input'
                     }),
                     React.createElement('button', {
@@ -195,7 +195,11 @@
                 ),
                 React.createElement('div', {
                     className: 'text-sm text-gray-500 mb-2 italic'
-                }, data.length > 0 && '💡 Tip: Use middle mouse button and drag horizontally to zoom into specific time periods'),
+                }, data.length > 0 && [
+                    window.matchMedia('(pointer: fine)').matches ? '💡 Tip: Use middle mouse button and drag horizontally to zoom into specific time periods' : '💡 Tip: Use the graph boundaries to zoom into specific time periods',
+                    React.createElement('br'),
+                    '💡 Tip: Remember that the same word may be spelled differently across languages'
+                ]),
                 error && React.createElement('div', { className: 'error' }, error),
                 React.createElement('div', {
                     ref: chartRef,
