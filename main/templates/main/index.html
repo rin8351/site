@@ -194,9 +194,7 @@
                     style: { height: '500px', display: data.length > 0 ? 'block' : 'none' }
                 }),
                 data.length === 0 && !isLoading && !error && 
-                    React.createElement('div', { className: 'text-center text-gray-500 py-12' },
-                        'Enter a search term to see frequency trends'
-                    )
+                    React.createElement('div', { className: 'text-center text-gray-500 py-12' })
             );
         };
 
