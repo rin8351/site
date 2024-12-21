@@ -118,21 +118,27 @@
                             marker: { color: colors[channel] }
                         }));
 
+                        const isNightMode = document.body.classList.contains('night-mode');
+
                         const layout = {
                             title: {
                                 text: `RTLM.info Word Frequency search: "${searchTerm}"`,
-                                y: 0.95
+                                font: {
+                                    color: isNightMode ? '#ffffff' : '#000000'
+                                }
                             },
-                            xaxis: { 
+                            xaxis: {
                                 title: 'Date',
-                                gridcolor: '#EDEDED'
+                                gridcolor: isNightMode ? '#444444' : '#EDEDED',
+                                color: isNightMode ? '#ffffff' : '#000000'
                             },
-                            yaxis: { 
+                            yaxis: {
                                 title: 'Occurrences',
-                                gridcolor: '#EDEDED'
+                                gridcolor: isNightMode ? '#444444' : '#EDEDED',
+                                color: isNightMode ? '#ffffff' : '#000000'
                             },
-                            paper_bgcolor: 'rgba(0,0,0,0)',
-                            plot_bgcolor: 'rgba(0,0,0,0)',
+                            paper_bgcolor: isNightMode ? '#000000' : '#ffffff',
+                            plot_bgcolor: isNightMode ? '#000000' : '#ffffff',
                             hovermode: 'closest',
                             margin: { t: 120, r: 20, b: 50, l: 50 },
                             showlegend: true,
