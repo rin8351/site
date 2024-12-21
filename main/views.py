@@ -91,7 +91,8 @@ def search_words(request):
         
         # Calculate date range (last 30 days)
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=30)
+        # start_date = end_date - timedelta(days=30)
+        start_date = datetime(2022, 1, 1)
 
         query = f"""
         WITH WordCounts AS (
