@@ -21,6 +21,7 @@
       <img src="{% static 'img/day.png' %}" alt="Дневной режим" id="sun-icon" style="display: none;">
       <img src="{% static 'img/night.png' %}" alt="Ночной режим" id="moon-icon">
     </div>
+{% comment %}
 <form action="{% url 'set_language' %}" method="post" id="language-form">
     {% csrf_token %}
     <input name="next" type="hidden" value="{{ request.path }}" />
@@ -34,6 +35,7 @@
         {% endfor %}
     </select>
 </form>
+{% endcomment %}
   </header>
 
   <main>
