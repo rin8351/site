@@ -13,7 +13,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 logger = logging.getLogger(__name__)
 
 def index(request):
-    logger.info(f'Index view called {request.path}')
+    logger.info(f'Index view called {request}')
     current_language = get_language()
     logger.info(f'Current language: {current_language}')
     

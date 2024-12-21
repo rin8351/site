@@ -28,12 +28,20 @@
     <select name="language" id="language-select">
       {% get_current_language as LANGUAGE_CODE %}
       {% get_available_languages as LANGUAGES %}
+      {{ request.LANGUAGE_CODE|json_script:"debug-current-language" }}
+      {{ LANGUAGES|json_script:"debug-available-languages" }}
+      {{ LANGUAGE_CODE|json_script:"debug-language-code" }}
         {% for lang in LANGUAGES %}
             <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected {% endif %}>
-                {{ lang.1 }}
+                {{ lang.1 }} (Debug - value: {{ lang.0 }}, current: {{ LANGUAGE_CODE }})
             </option>
         {% endfor %}
     </select>
+    <script>
+        console.log('Current language from request:', JSON.parse(document.getElementById('debug-current-language').textContent));
+        console.log('Available languages:', JSON.parse(document.getElementById('debug-available-languages').textContent));
+        console.log('Language code:', JSON.parse(document.getElementById('debug-language-code').textContent));
+    </script>
   </form>
   </header>
 
