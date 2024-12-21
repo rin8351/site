@@ -22,9 +22,9 @@
       <img src="{% static 'img/day.png' %}" alt="Дневной режим" id="sun-icon" style="display: none;">
       <img src="{% static 'img/night.png' %}" alt="Ночной режим" id="moon-icon">
     </div>
-<form action="/i18n/setlang/" method="post" id="language-form">
+<form action="{% url 'set_language' %}" method="post" id="language-form">
     {% csrf_token %}
-    <input name="next" type="hidden" value="{{ redirect_to }}" />
+    <input name="next" type="hidden" value="{{ request.path }}" />
     <select name="language" id="language-select">
       {% get_current_language as LANGUAGE_CODE %}
       {% get_available_languages as LANGUAGES %}
@@ -292,8 +292,10 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var languageSelect = document.getElementById('language-select');
+        var languageForm = document.getElementById('language-form');
+        
         languageSelect.addEventListener('change', function() {
-          this.form.submit();
+          languageForm.submit();
         });
       });
     </script>
