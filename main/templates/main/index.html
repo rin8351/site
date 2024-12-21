@@ -100,7 +100,7 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/victory/dist/victory.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
     
     {% csrf_token %}
     <script>
@@ -111,6 +111,7 @@
             const [data, setData] = React.useState([]);
             const [isLoading, setIsLoading] = React.useState(false);
             const [error, setError] = React.useState(null);
+            const chartRef = React.useRef(null);
 
             const colors = {
                 'ORT': '#264653',
@@ -118,6 +119,8 @@
                 'oneplusone': '#E9C46A',
                 'russiaone': '#E63946'
             };
+
+            const channels = ['ORT', 'belarusone', 'oneplusone', 'russiaone'];
 
             function getCookie(name) {
                 let cookieValue = null;
@@ -138,8 +141,6 @@
                 e.preventDefault();
                 setIsLoading(true);
                 setError(null);
-                
-                console.log('Sending search request:', searchTerm);
 
                 try {
                     const response = await fetch('/api/search', {
@@ -151,32 +152,71 @@
                         body: JSON.stringify({ searchTerm: searchTerm.trim() })
                     });
 
-                    console.log('Response status:', response.status);
-                    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-                    
-                    const contentType = response.headers.get('content-type');
-                    console.log('Content-Type:', contentType);
-
-                    const responseText = await response.text();
-                    console.log('Raw response text:', responseText.substring(0, 1000));
-                    
                     if (!response.ok) {
-                        throw new Error(`Search failed: ${response.status} ${response.statusText}`);
+                        throw new Error('Search failed. Please try again.');
                     }
-                    
-                    if (!contentType || !contentType.includes('application/json')) {
-                        console.error('Invalid content type:', contentType);
-                        console.error('Response preview:', responseText.substring(0, 200));
-                        throw new Error('Server returned non-JSON response');
-                    }
-                    
-                    const results = JSON.parse(responseText);
-                    console.log('Parsed results:', results);
-                    
+
+                    const results = await response.json();
                     setData(results);
+
+                    if (results.length > 0) {
+                        const traces = channels.map(channel => ({
+                            x: results.map(item => item.date),
+                            y: results.map(item => item[channel]),
+                            mode: 'lines+markers',
+                            name: channel,
+                            line: { color: colors[channel] },
+                            marker: { color: colors[channel] }
+                        }));
+
+                        const layout = {
+                            title: {
+                                text: `RTLM.info Word Frequency search: "${searchTerm}"`,
+                                y: 0.95
+                            },
+                            xaxis: { 
+                                title: 'Date',
+                                gridcolor: '#EDEDED'
+                            },
+                            yaxis: { 
+                                title: 'Occurrences',
+                                gridcolor: '#EDEDED'
+                            },
+                            paper_bgcolor: 'rgba(0,0,0,0)',
+                            plot_bgcolor: 'rgba(0,0,0,0)',
+                            hovermode: 'closest',
+                            margin: { t: 120, r: 20, b: 50, l: 50 },
+                            showlegend: true,
+                            legend: {
+                                x: 0.5,
+                                y: 1.15,
+                                xanchor: 'center',
+                                yanchor: 'bottom',
+                                orientation: 'h'
+                            }
+                        };
+
+                        const config = {
+                            responsive: true,
+                            displayModeBar: true,
+                            displaylogo: false,
+                            modeBarButtonsToRemove: [
+                                'zoom2d',
+                                'zoomIn2d', 
+                                'zoomOut2d',
+                                'resetScale2d',
+                                'hoverClosestCartesian',
+                                'hoverCompareCartesian',
+                                'toggleSpikelines',
+                                'lasso2d'
+                            ],
+                            displayModeBar: 'hover'
+                        };
+
+                        Plotly.newPlot(chartRef.current, traces, layout, config);
+                    }
                 } catch (err) {
-                    console.error('Search error:', err);
-                    setError(`Error: ${err.message}`);
+                    setError(err.message);
                     setData([]);
                 } finally {
                     setIsLoading(false);
@@ -198,21 +238,14 @@
                     }, isLoading ? 'Searching...' : 'Search')
                 ),
                 error && React.createElement('div', { className: 'error' }, error),
-                data.length > 0 && React.createElement(Victory.VictoryChart, {
-                    scale: { x: "time" },
-                    containerComponent: React.createElement(Victory.VictoryVoronoiContainer)
-                },
-                    Object.keys(colors).map(channel => 
-                        React.createElement(Victory.VictoryLine, {
-                            key: channel,
-                            data: data.map(d => ({
-                                x: new Date(d.date),
-                                y: d[channel]
-                            })),
-                            style: { data: { stroke: colors[channel] } }
-                        })
+                React.createElement('div', {
+                    ref: chartRef,
+                    style: { height: '500px', display: data.length > 0 ? 'block' : 'none' }
+                }),
+                data.length === 0 && !isLoading && !error && 
+                    React.createElement('div', { className: 'text-center text-gray-500 py-12' },
+                        'Enter a search term to see frequency trends'
                     )
-                )
             );
         };
 
