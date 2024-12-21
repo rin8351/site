@@ -125,7 +125,8 @@
                                 text: `RTLM.info Word Frequency search: "${searchTerm}"`,
                                 font: {
                                     color: isNightMode ? '#ffffff' : '#000000'
-                                }
+                                },
+                                y: 0.95
                             },
                             xaxis: {
                                 title: 'Date',
@@ -140,13 +141,13 @@
                             paper_bgcolor: isNightMode ? '#000000' : '#ffffff',
                             plot_bgcolor: isNightMode ? '#000000' : '#ffffff',
                             hovermode: 'closest',
-                            margin: { t: 120, r: 20, b: 50, l: 50 },
+                            margin: { t: 50, r: 20, b: 50, l: 50 },
                             showlegend: true,
                             legend: {
                                 x: 0.5,
-                                y: 1.15,
+                                y: -0.15,
                                 xanchor: 'center',
-                                yanchor: 'bottom',
+                                yanchor: 'top',
                                 orientation: 'h'
                             }
                         };
