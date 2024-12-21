@@ -44,7 +44,6 @@
   </div>
 
   <div class="text-block">
-    <h2>{% trans "Word Search" %}</h2>
     <div id="search-root"></div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
@@ -186,6 +185,9 @@
                         disabled: isLoading
                     }, isLoading ? 'Searching...' : 'Search')
                 ),
+                React.createElement('div', {
+                    className: 'text-sm text-gray-500 mb-2 italic'
+                }, '💡 Tip: Use middle mouse button and drag horizontally and zoom into specific time periods'),
                 error && React.createElement('div', { className: 'error' }, error),
                 React.createElement('div', {
                     ref: chartRef,
