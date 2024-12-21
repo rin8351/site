@@ -15,13 +15,26 @@ logger = logging.getLogger(__name__)
 def index(request):
     logger.info('Index view called')
     current_language = get_language()
+    logger.info(f'Current language: {current_language}')
+    
     base_dir = os.path.join(settings.BASE_DIR, 'main')
     file_path = os.path.join(base_dir, f'description_{current_language}.txt')
+    logger.info(f'Attempting to load description file: {file_path}')
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            description = file.read()
+            logger.info(f'Successfully loaded description file')
+    except FileNotFoundError:
+        logger.error(f'Description file not found: {file_path}')
+        description = "Description not found"
+    except Exception as e:
+        logger.error(f'Error reading description file: {str(e)}')
+        description = "Error loading description"
+    
+    base_dir = os.path.join(settings.BASE_DIR, 'main')
     file_path2 = os.path.join(base_dir, f'links_{current_language}.txt')
     file_path3 = os.path.join(base_dir, f'ds_{current_language}.txt')
-
-    with open(file_path, 'r', encoding='utf-8') as file:
-        description = file.read()
 
     with open(file_path2, 'r', encoding='utf-8') as file2:
         links = file2.read()
