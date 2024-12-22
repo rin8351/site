@@ -1,3 +1,4 @@
 Django==4.2.7.
 gunicorn==21.2.0
 google-cloud-bigquery==3.27.0
+humanize
