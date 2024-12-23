@@ -220,54 +220,65 @@
       <a href="https://www.1tv.ru/live" class="image-link">
         <img src="{% static 'img/1tv.png' %}" alt="1tv">
       </a>
-      <p>
-        <a href="https://storage.googleapis.com/rtlm/2023_ORT.zip">2023.11.05 - 2024 # ORT</a>
-      </p>
+      {% for item in channel_stats_list %}
+        {% if item.channel == "ORT" %}
+          <div>
+            • First Date: {{ item.first_date }} <br />
+            • Last Date: {{ item.last_date }} <br />
+            • Records: {{ item.record_count }}
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
 
     <div class="text-block">
       <a href="https://www.tvr.by/televidenie/belarus-1" class="image-link">
         <img src="{% static 'img/belarus-1.png' %}" alt="belarus-1">
       </a>
-      <p>
-        <a href="https://storage.googleapis.com/rtlm/2023_belarusone.zip">2023.11.12 - 2024 # Belarus 1</a>
-      </p>
+      {% for item in channel_stats_list %}
+        {% if item.channel == "belarusone" %}
+          <div>
+            • First Date: {{ item.first_date }} <br />
+            • Last Date: {{ item.last_date }} <br />
+            • Records: {{ item.record_count }}
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
 
     <div class="text-block">
       <a href="https://1plus1.video/tvguide/1plus1/online" class="image-link">
         <img src="{% static 'img/1plus1.png' %}" alt="1plus1">
       </a>
-      <p>
-        <a href="https://storage.googleapis.com/rtlm/2023_oneplusone.zip">2023.11.12 - 2024 # 1+1</a>
-      </p>
+      {% for item in channel_stats_list %}
+        {% if item.channel == "oneplusone" %}
+          <div>
+            • First Date: {{ item.first_date }} <br />
+            • Last Date: {{ item.last_date }} <br />
+            • Records: {{ item.record_count }}
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
 
     <div class="text-block">
       <a href="https://smotrim.ru/live/63254" class="image-link">
         <img src="{% static 'img/rossia.png' %}" alt="ros1">
       </a>
-      <p>
-        <a href="https://storage.googleapis.com/rtlm/2023_russiaone.zip">2023.11.26 - 2024 # Russia 1</a>
-      </p>
+      {% for item in channel_stats_list %}
+        {% if item.channel == "russiaone" %}
+          <div>
+            • First Date: {{ item.first_date }} <br />
+            • Last Date: {{ item.last_date }} <br />
+            • Records: {{ item.record_count }}
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
 
     <div class="text-block">
       <p>{{ ds|linebreaksbr }}</p>
     </div>
-  </div>
-
-  <div class="text-block">
-    <h2>Channel Statistics</h2>
-    {% for item in channel_stats_list %}
-      <div>
-        <strong>{{ item.channel }}</strong><br />
-        • First Date: {{ item.first_date }} <br />
-        • Last Date:  {{ item.last_date }} <br />
-        • Records:    {{ item.record_count }}
-      </div>
-      <br />
-    {% endfor %}
   </div>
 
   </main>
