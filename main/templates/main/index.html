@@ -185,7 +185,7 @@
                         type: 'text',
                         value: searchTerm,
                         onChange: (e) => setSearchTerm(e.target.value),
-                        placeholder: 'Enter word in cyrillic letters...',
+                        placeholder: 'Enter word or sentence...',
                         className: 'search-input'
                     }),
                     React.createElement('button', {
@@ -216,65 +216,90 @@
   </div>
 
   <div>  
-    <div class="text-block">
-      <a href="https://www.1tv.ru/live" class="image-link">
-        <img src="{% static 'img/1tv.png' %}" alt="1tv">
-      </a>
-      {% for item in channel_stats_list %}
-        {% if item.channel == "ORT" %}
-          <div>
-            • First Date: {{ item.first_date }} <br />
-            • Last Date: {{ item.last_date }} <br />
-            • Records: {{ item.record_count }}
-          </div>
-        {% endif %}
-      {% endfor %}
+    <div class="text-block" style="display: table;">
+      <div style="display: table-row;">
+        <div style="display: table-cell; padding-right: 20px;">
+          <a href="https://www.1tv.ru/live" class="image-link">
+            <img src="{% static 'img/1tv.png' %}" alt="1tv">
+          </a>
+        </div>
+        <div style="display: table-cell; text-align: left;">
+          {% for item in channel_stats_list %}
+            {% if item.channel == "ORT" %}
+              <div>
+                • First Date: {{ item.first_date }} <br />
+                • Last Date: {{ item.last_date }} <br />
+                • Records: {{ item.record_count }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
     </div>
 
-    <div class="text-block">
-      <a href="https://www.tvr.by/televidenie/belarus-1" class="image-link">
-        <img src="{% static 'img/belarus-1.png' %}" alt="belarus-1">
-      </a>
-      {% for item in channel_stats_list %}
-        {% if item.channel == "belarusone" %}
-          <div>
-            • First Date: {{ item.first_date }} <br />
-            • Last Date: {{ item.last_date }} <br />
-            • Records: {{ item.record_count }}
-          </div>
-        {% endif %}
-      {% endfor %}
+    <div class="text-block" style="display: table;">
+      <div style="display: table-row;">
+        <div style="display: table-cell; padding-right: 20px;">
+          <a href="https://www.tvr.by/televidenie/belarus-1" class="image-link">
+            <img src="{% static 'img/belarus-1.png' %}" alt="belarus-1">
+          </a>
+        </div>
+        <div style="display: table-cell; text-align: left;">
+          {% for item in channel_stats_list %}
+            {% if item.channel == "belarusone" %}
+              <div>
+                • First Date: {{ item.first_date }} <br />
+                • Last Date: {{ item.last_date }} <br />
+                • Records: {{ item.record_count }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
     </div>
 
-    <div class="text-block">
-      <a href="https://1plus1.video/tvguide/1plus1/online" class="image-link">
-        <img src="{% static 'img/1plus1.png' %}" alt="1plus1">
-      </a>
-      {% for item in channel_stats_list %}
-        {% if item.channel == "oneplusone" %}
-          <div>
-            • First Date: {{ item.first_date }} <br />
-            • Last Date: {{ item.last_date }} <br />
-            • Records: {{ item.record_count }}
-          </div>
-        {% endif %}
-      {% endfor %}
+    <div class="text-block" style="display: table;">
+      <div style="display: table-row;">
+        <div style="display: table-cell; padding-right: 20px;">
+          <a href="https://1plus1.video/tvguide/1plus1/online" class="image-link">
+            <img src="{% static 'img/1plus1.png' %}" alt="1plus1">
+          </a>
+        </div>
+        <div style="display: table-cell; text-align: left;">
+          {% for item in channel_stats_list %}
+            {% if item.channel == "oneplusone" %}
+              <div>
+                • First Date: {{ item.first_date }} <br />
+                • Last Date: {{ item.last_date }} <br />
+                • Records: {{ item.record_count }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
     </div>
 
-    <div class="text-block">
-      <a href="https://smotrim.ru/live/63254" class="image-link">
-        <img src="{% static 'img/rossia.png' %}" alt="ros1">
-      </a>
-      {% for item in channel_stats_list %}
-        {% if item.channel == "russiaone" %}
-          <div>
-            • First Date: {{ item.first_date }} <br />
-            • Last Date: {{ item.last_date }} <br />
-            • Records: {{ item.record_count }}
-          </div>
-        {% endif %}
-      {% endfor %}
+    <div class="text-block" style="display: table;">
+      <div style="display: table-row;">
+        <div style="display: table-cell; padding-right: 20px;">
+          <a href="https://smotrim.ru/live/63254" class="image-link">
+            <img src="{% static 'img/rossia.png' %}" alt="ros1">
+          </a>
+        </div>
+        <div style="display: table-cell; text-align: left;">
+          {% for item in channel_stats_list %}
+            {% if item.channel == "russiaone" %}
+              <div>
+                • First Date: {{ item.first_date }} <br />
+                • Last Date: {{ item.last_date }} <br />
+                • Records: {{ item.record_count }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
     </div>
+  </div>
 
     <div class="text-block">
       <p>{{ ds|linebreaksbr }}</p>
