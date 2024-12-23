@@ -244,3 +244,17 @@ main {
   padding: 10px; /* Меньшие отступы на мобильных устройствах */
 }
 }
+
+.channel-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.channel-image {
+    flex-shrink: 0;
+}
+
+.channel-info {
+    flex-grow: 1;
+}
