@@ -257,6 +257,19 @@
     </div>
   </div>
 
+  <div class="text-block">
+    <h2>Channel Statistics</h2>
+    {% for item in channel_stats_list %}
+      <div>
+        <strong>{{ item.channel }}</strong><br />
+        • First Date: {{ item.first_date }} <br />
+        • Last Date:  {{ item.last_date }} <br />
+        • Records:    {{ item.record_count }}
+      </div>
+      <br />
+    {% endfor %}
+  </div>
+
   </main>
 
   <footer>

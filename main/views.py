@@ -9,40 +9,107 @@ import logging
 import json
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
+
+@dataclass
+class ChannelStats:
+    first_date: datetime
+    last_date: datetime
+    record_count: int
+
+class BigQueryTranscriptAnalyzer:
+    def __init__(self, project_id: str, dataset: str, table: str):
+        self.client = bigquery.Client(project=project_id)
+        self.table_path = f"{project_id}.{dataset}.{table}"
+        self.table_ref = self.client.get_table(self.table_path)
+
+    def get_schema(self) -> list:
+        return [(field.name, field.field_type) for field in self.table_ref.schema]
+
+    def get_channel_stats(self, channel_id: str) -> ChannelStats:
+        query = f"""
+        SELECT
+            MIN(timestamp) as first_date,
+            MAX(timestamp) as last_date,
+            COUNT(*) as record_count
+        FROM `{self.table_path}`
+        WHERE channel = @channel_id
+        """
+        job_config = bigquery.QueryJobConfig(
+            query_parameters=[
+                bigquery.ScalarQueryParameter("channel_id", "STRING", channel_id)
+            ]
+        )
+        query_job = self.client.query(query, job_config=job_config)
+        results = list(query_job)
+
+        if not results:
+            raise ValueError(f"No data found for channel_id: {channel_id}")
+
+        result = results[0]
+        return ChannelStats(
+            first_date=result.first_date,
+            last_date=result.last_date,
+            record_count=result.record_count
+        )
 
 def index(request):
     logger.info(f'Index view called. Path: {request.path}, Language: {request.LANGUAGE_CODE}')
     current_language = get_language()
     logger.info(f'Current language: {current_language}')
-    
+
+    # Load the descriptive text from the appropriate file
     base_dir = os.path.join(settings.BASE_DIR, 'main')
     file_path = os.path.join(base_dir, f'description_{current_language}.txt')
     logger.info(f'Attempting to load description file: {file_path}')
-    
+
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             description = file.read()
-            logger.info(f'Successfully loaded description file')
+            logger.info('Successfully loaded description file')
     except FileNotFoundError:
         logger.error(f'Description file not found: {file_path}')
         description = "Description not found"
     except Exception as e:
         logger.error(f'Error reading description file: {str(e)}')
         description = "Error loading description"
-    
-    base_dir = os.path.join(settings.BASE_DIR, 'main')
+
+    # Load other text blocks
     file_path2 = os.path.join(base_dir, f'links_{current_language}.txt')
     file_path3 = os.path.join(base_dir, f'ds_{current_language}.txt')
-
     with open(file_path2, 'r', encoding='utf-8') as file2:
         links = file2.read()
-    
     with open(file_path3, 'r', encoding='utf-8') as file3:
         ds = file3.read()
-    
-    context = {'description': description, 'links': links, 'ds': ds}
+
+    # Gather channel stats
+    analyzer = BigQueryTranscriptAnalyzer(
+        project_id="usavm-334506",
+        dataset="rtlm",
+        table="channel_transcripts"
+    )
+    channels = ["ORT", "belarusone", "russiaone", "oneplusone"]
+    channel_stats_list = []
+    for ch_id in channels:
+        try:
+            stats = analyzer.get_channel_stats(ch_id)
+            channel_stats_list.append({
+                "channel": ch_id,
+                "first_date": stats.first_date,
+                "last_date": stats.last_date,
+                "record_count": stats.record_count
+            })
+        except Exception as e:
+            logger.error(f'Error fetching stats for {ch_id}: {e}')
+
+    context = {
+        'description': description,
+        'links': links,
+        'ds': ds,
+        'channel_stats_list': channel_stats_list
+    }
     return render(request, 'main/index.html', context)
 
 @require_http_methods(["POST"])
