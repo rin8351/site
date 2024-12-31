@@ -223,15 +223,15 @@ def search_words(request):
             # Handle both dictionary and string return types
             if isinstance(translations, dict):
                 translation_pairs = [
-                    ('🇷🇺', translations.get('ru', '')),
-                    ('🇺🇦', translations.get('uk', '')),
-                    ('🇧🇾', translations.get('be', ''))
+                    ('🇺🇦', translations.get('uk', '')),  # Ukrainian
+                    ('🇷🇺', translations.get('ru', '')),  # Russian
+                    ('🇧🇾', translations.get('be', ''))   # Belarusian
                 ]
                 formatted_translations = ', '.join(f"{flag} {trans}" for flag, trans in translation_pairs if trans)
             else:
                 # If it's already a string, add flags
                 parts = translations.split(', ')
-                flags = ['🇷🇺', '🇺🇦', '🇧🇾']
+                flags = ['🇺🇦', '🇷🇺', '🇧🇾']  # Updated order
                 formatted_translations = ', '.join(f"{flag} {part}" for flag, part in zip(flags, parts))
             logger.info(f'Got formatted translations: {formatted_translations}')
         except Exception as e:
