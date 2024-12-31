@@ -201,7 +201,9 @@
                 }, data.length > 0 && [
                     '💡 Tip: Drag horizontally to zoom into specific time periods',
                     React.createElement('br'),
-                    '💡 Tip: Remember that the same word may be spelled differently across languages'
+                    translations ? 
+                        `💡 Tip: Remember that the same word may be spelled differently across languages: ${translations.replace(/🇷🇺|🇺🇦|🇧🇾/g, '\n$&')}` 
+                        : '💡 Tip: Remember that the same word may be spelled differently across languages'
                 ]),
                 error && React.createElement('div', { className: 'error' }, error),
                 React.createElement('div', {
@@ -209,19 +211,7 @@
                     style: { height: '500px', display: data.length > 0 ? 'block' : 'none' }
                 }),
                 data.length === 0 && !isLoading && !error && 
-                    React.createElement('div', { className: 'text-center text-gray-500 py-12' }),
-                translations && React.createElement('div', {
-                    className: 'translations-block',
-                    style: {
-                        marginTop: '10px',
-                        padding: '10px',
-                        backgroundColor: 'rgba(0,0,0,0.05)',
-                        borderRadius: '4px'
-                    }
-                }, [
-                    React.createElement('strong', {}, 'Translations: '),
-                    React.createElement('span', {}, translations)
-                ])
+                    React.createElement('div', { className: 'text-center text-gray-500 py-12' })
             );
         };
 
