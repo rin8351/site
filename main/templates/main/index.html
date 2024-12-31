@@ -198,11 +198,11 @@
                 ),
                 React.createElement('div', {
                     className: 'text-sm text-gray-500 mb-2 italic'
-                }, data.length > 0 && [
-                    '💡 Tip: Drag horizontally to zoom into specific time periods',
-                    React.createElement('br'),
+                }, [
+                    data.length > 0 && '💡 Tip: Drag horizontally to zoom into specific time periods',
+                    data.length > 0 && React.createElement('br'),
                     translations ? 
-                        `💡 Tip: Remember that the same word may be spelled differently across languages: ${translations}` 
+                        `🔤 Spelling: ${translations}` 
                         : '💡 Tip: Remember that the same word may be spelled differently across languages'
                 ]),
                 error && React.createElement('div', { className: 'error' }, error),
