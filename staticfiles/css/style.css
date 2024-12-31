@@ -99,7 +99,7 @@ footer img:hover {
 }
 
 body.day-mode {
-background-color: white;
+background-color: #f8f9fa;  /* Slightly off-white color */;
 color: black;
 }
 
