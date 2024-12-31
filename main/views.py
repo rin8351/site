@@ -220,15 +220,17 @@ def search_words(request):
         # Get translations
         try:
             translations = translate_to_slavic(search_term)
-            # Format translations with flags
-            formatted_translations = []
-            if translations:
+            # Handle both dictionary and string return types
+            if isinstance(translations, dict):
                 translation_pairs = [
                     ('🇷🇺', translations.get('ru', '')),
                     ('🇺🇦', translations.get('uk', '')),
                     ('🇧🇾', translations.get('be', ''))
                 ]
                 formatted_translations = ' '.join(f"{flag} {trans}" for flag, trans in translation_pairs if trans)
+            else:
+                # Assume it's a string with translations already formatted
+                formatted_translations = translations
             logger.info(f'Got formatted translations: {formatted_translations}')
         except Exception as e:
             logger.error(f'Translation error: {str(e)}')
