@@ -10,6 +10,7 @@ import json
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
 from dataclasses import dataclass
+from .translator import translate_to_slavic
 
 logger = logging.getLogger(__name__)
 
@@ -216,10 +217,21 @@ def search_words(request):
         logger.info(f'Found {len(results)} results')
         logger.debug(f'First result: {results[0] if results else None}')
         
-        response = JsonResponse(results, safe=False)
-        response['Content-Type'] = 'application/json'
-        logger.debug(f'Response headers: {dict(response.items())}')
-        return response
+        # Get translations
+        try:
+            translations = translate_to_slavic(search_term)
+            logger.info(f'Got translations: {translations}')
+        except Exception as e:
+            logger.error(f'Translation error: {str(e)}')
+            translations = None
+
+        # Include translations in the response
+        response_data = {
+            'results': results,
+            'translations': translations
+        }
+        
+        return JsonResponse(response_data, safe=False)
 
     except Exception as e:
         logger.error(f'Error in search_words: {str(e)}', exc_info=True)

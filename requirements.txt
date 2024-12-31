@@ -1,4 +1,6 @@
 Django==4.2.7.
 gunicorn==21.2.0
 google-cloud-bigquery==3.27.0
-humanize
+humanize==4.11.0
+googletrans==4.0.0-rc1
+legacy-cgi==2.6.1

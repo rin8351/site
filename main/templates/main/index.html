@@ -58,6 +58,7 @@
         const WordSearchViz = () => {
             const [searchTerm, setSearchTerm] = React.useState('');
             const [data, setData] = React.useState([]);
+            const [translations, setTranslations] = React.useState(null);
             const [isLoading, setIsLoading] = React.useState(false);
             const [error, setError] = React.useState(null);
             const chartRef = React.useRef(null);
@@ -90,6 +91,7 @@
                 e.preventDefault();
                 setIsLoading(true);
                 setError(null);
+                setTranslations(null);
 
                 try {
                     const response = await fetch('/api/search', {
@@ -105,13 +107,14 @@
                         throw new Error('Search failed. Please try again.');
                     }
 
-                    const results = await response.json();
-                    setData(results);
+                    const responseData = await response.json();
+                    setData(responseData.results);
+                    setTranslations(responseData.translations);
 
-                    if (results.length > 0) {
+                    if (responseData.results.length > 0) {
                         const traces = channels.map(channel => ({
-                            x: results.map(item => item.date),
-                            y: results.map(item => item[channel]),
+                            x: responseData.results.map(item => item.date),
+                            y: responseData.results.map(item => item[channel]),
                             mode: 'lines+markers',
                             name: channel,
                             line: { color: colors[channel] },
@@ -206,7 +209,19 @@
                     style: { height: '500px', display: data.length > 0 ? 'block' : 'none' }
                 }),
                 data.length === 0 && !isLoading && !error && 
-                    React.createElement('div', { className: 'text-center text-gray-500 py-12' })
+                    React.createElement('div', { className: 'text-center text-gray-500 py-12' }),
+                translations && React.createElement('div', {
+                    className: 'translations-block',
+                    style: {
+                        marginTop: '10px',
+                        padding: '10px',
+                        backgroundColor: 'rgba(0,0,0,0.05)',
+                        borderRadius: '4px'
+                    }
+                }, [
+                    React.createElement('strong', {}, 'Translations: '),
+                    React.createElement('span', {}, translations)
+                ])
             );
         };
 
