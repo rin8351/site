@@ -227,10 +227,12 @@ def search_words(request):
                     ('🇺🇦', translations.get('uk', '')),
                     ('🇧🇾', translations.get('be', ''))
                 ]
-                formatted_translations = ' '.join(f"{flag} {trans}" for flag, trans in translation_pairs if trans)
+                formatted_translations = ', '.join(f"{flag} {trans}" for flag, trans in translation_pairs if trans)
             else:
-                # Assume it's a string with translations already formatted
-                formatted_translations = translations
+                # If it's already a string, add flags
+                parts = translations.split(', ')
+                flags = ['🇷🇺', '🇺🇦', '🇧🇾']
+                formatted_translations = ', '.join(f"{flag} {part}" for flag, part in zip(flags, parts))
             logger.info(f'Got formatted translations: {formatted_translations}')
         except Exception as e:
             logger.error(f'Translation error: {str(e)}')
