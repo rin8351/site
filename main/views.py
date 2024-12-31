@@ -220,15 +220,24 @@ def search_words(request):
         # Get translations
         try:
             translations = translate_to_slavic(search_term)
-            logger.info(f'Got translations: {translations}')
+            # Format translations with flags
+            formatted_translations = []
+            if translations:
+                translation_pairs = [
+                    ('🇷🇺', translations.get('ru', '')),
+                    ('🇺🇦', translations.get('uk', '')),
+                    ('🇧🇾', translations.get('be', ''))
+                ]
+                formatted_translations = ' '.join(f"{flag} {trans}" for flag, trans in translation_pairs if trans)
+            logger.info(f'Got formatted translations: {formatted_translations}')
         except Exception as e:
             logger.error(f'Translation error: {str(e)}')
-            translations = None
+            formatted_translations = None
 
         # Include translations in the response
         response_data = {
             'results': results,
-            'translations': translations
+            'translations': formatted_translations
         }
         
         return JsonResponse(response_data, safe=False)
