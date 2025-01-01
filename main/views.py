@@ -238,10 +238,14 @@ def search_words(request):
             logger.error(f'Translation error: {str(e)}')
             formatted_translations = None
 
-        # Include translations in the response
+        # Modify the response_data to include weekend information
         response_data = {
-            'results': results,
-            'translations': formatted_translations
+            'timeseries': results,
+            'translations': formatted_translations,
+            'correlations': {
+                'channels': channels,
+                'matrix': [[0 for _ in channels] for _ in channels]  # Placeholder correlation matrix
+            }
         }
         
         return JsonResponse(response_data, safe=False)

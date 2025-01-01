@@ -121,6 +121,30 @@
                             marker: { color: colors[channel] }
                         }));
 
+                        const shapes = responseData.results.map(item => {
+                            const date = new Date(item.date);
+                            const dayOfWeek = date.getDay();
+                            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+                            if (isWeekend) {
+                                const nextDate = new Date(date);
+                                nextDate.setDate(date.getDate() + 1);
+                                
+                                return {
+                                    type: 'rect',
+                                    xref: 'x',
+                                    x0: item.date,
+                                    x1: nextDate.toISOString().split('T')[0],
+                                    yref: 'paper',
+                                    y0: 0,
+                                    y1: 1,
+                                    fillcolor: 'rgba(200,200,200,0.3)',
+                                    line: {width: 0}
+                                };
+                            }
+                            return null;
+                        }).filter(shape => shape !== null);
+
                         const isNightMode = document.body.classList.contains('night-mode');
 
                         const layout = {
@@ -141,6 +165,7 @@
                                 gridcolor: isNightMode ? '#444444' : '#EDEDED',
                                 color: isNightMode ? '#ffffff' : '#000000'
                             },
+                            shapes: shapes,
                             paper_bgcolor: isNightMode ? '#000000' : '#f8f9fa',
                             plot_bgcolor: isNightMode ? '#000000' : '#f8f9fa',
                             hovermode: 'closest',
