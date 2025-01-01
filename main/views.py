@@ -116,6 +116,8 @@ def index(request):
 @require_http_methods(["POST"])
 @ensure_csrf_cookie
 def search_words(request):
+    channels = ["ORT", "belarusone", "oneplusone", "russiaone"]
+    
     logger.info('Search view called')
     try:
         logger.info('Received search request')
@@ -238,7 +240,7 @@ def search_words(request):
             logger.error(f'Translation error: {str(e)}')
             formatted_translations = None
 
-        # Modify the response_data to include weekend information
+        # Modify the response_data to include the channels list
         response_data = {
             'timeseries': results,
             'translations': formatted_translations,
