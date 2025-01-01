@@ -116,8 +116,6 @@ def index(request):
 @require_http_methods(["POST"])
 @ensure_csrf_cookie
 def search_words(request):
-    channels = ["ORT", "belarusone", "oneplusone", "russiaone"]
-    
     logger.info('Search view called')
     try:
         logger.info('Received search request')
@@ -240,14 +238,10 @@ def search_words(request):
             logger.error(f'Translation error: {str(e)}')
             formatted_translations = None
 
-        # Modify the response_data to include the channels list
+        # Include translations in the response
         response_data = {
-            'timeseries': results,
-            'translations': formatted_translations,
-            'correlations': {
-                'channels': channels,
-                'matrix': [[0 for _ in channels] for _ in channels]  # Placeholder correlation matrix
-            }
+            'results': results,
+            'translations': formatted_translations
         }
         
         return JsonResponse(response_data, safe=False)
