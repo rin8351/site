@@ -85,25 +85,55 @@ def index(request):
     with open(file_path3, 'r', encoding='utf-8') as file3:
         ds = file3.read()
 
-    # Gather channel stats
-    analyzer = BigQueryTranscriptAnalyzer(
-        project_id="usavm-334506",
-        dataset="rtlm",
-        table="channel_transcripts"
-    )
-    channels = ["ORT", "belarusone", "russiaone", "oneplusone"]
-    channel_stats_list = []
-    for ch_id in channels:
-        try:
-            stats = analyzer.get_channel_stats(ch_id)
-            channel_stats_list.append({
-                "channel": ch_id,
-                "first_date": stats.first_date,
-                "last_date": stats.last_date,
-                "record_count": stats.record_count
-            })
-        except Exception as e:
-            logger.error(f'Error fetching stats for {ch_id}: {e}')
+    use_hardcoded_stats = True
+    if use_hardcoded_stats:
+        # Hardcoded channel stats instead of querying BigQuery
+        channel_stats_list = [
+            {
+                "channel": "ORT",
+                "first_date": datetime(2023, 11, 5, 12, 11),
+                "last_date": datetime(2025, 1, 13, 23, 39),
+                "record_count": 69387
+            },
+            {
+                "channel": "belarusone",
+                "first_date": datetime(2023, 11, 12, 21, 46),
+                "last_date": datetime(2025, 1, 13, 23, 30),
+                "record_count": 46104
+            },
+            {
+                "channel": "oneplusone",
+                "first_date": datetime(2023, 11, 12, 11, 42),
+                "last_date": datetime(2025, 1, 13, 23, 29),
+                "record_count": 60416
+            },
+            {
+                "channel": "russiaone",
+                "first_date": datetime(2023, 11, 26, 1, 56),
+                "last_date": datetime(2025, 1, 13, 23, 32),
+                "record_count": 55622
+            }
+        ]
+    else:
+        # Gather channel stats
+        analyzer = BigQueryTranscriptAnalyzer(
+            project_id="usavm-334506",
+            dataset="rtlm",
+            table="channel_transcripts"
+        )
+        channels = ["ORT", "belarusone", "russiaone", "oneplusone"]
+        channel_stats_list = []
+        for ch_id in channels:
+            try:
+                stats = analyzer.get_channel_stats(ch_id)
+                channel_stats_list.append({
+                    "channel": ch_id,
+                    "first_date": stats.first_date,
+                    "last_date": stats.last_date,
+                    "record_count": stats.record_count
+                })
+            except Exception as e:
+                logger.error(f'Error fetching stats for {ch_id}: {e}')
 
     context = {
         'description': description,
