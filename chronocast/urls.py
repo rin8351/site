@@ -19,16 +19,19 @@ from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
+from main import views as main_views
 
 # Non-localized URLs (like API endpoints)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('main.urls')),  # just 'api/' here
+    path('api/', include('main.api_urls')),  # just 'api/' here
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 # Add localized URLs
 urlpatterns += i18n_patterns(
+    path('', main_views.index, name='index'),
+    path('search', main_views.search_words, name='search_words'),
     path('', include('main.urls')),
     prefix_default_language=False,
 )

@@ -7,4 +7,5 @@ app_name = 'main'
 urlpatterns = [
     path('', views.index, name='index'),
     path('search', views.search_words, name='search_words'),  # now this maps to '/api/search'
+    path('flights/<str:flight_html_file>', views.serve_flight_html, name='serve_flight_html'),
 ]

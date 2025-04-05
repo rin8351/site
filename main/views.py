@@ -2,7 +2,7 @@ import os
 from django.conf import settings
 from django.shortcuts import render
 from django.utils.translation import get_language
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from google.cloud import bigquery
 from datetime import datetime, timedelta
 import logging
@@ -11,6 +11,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
 from dataclasses import dataclass
 from .translator import translate_to_slavic
+from django.template import TemplateDoesNotExist
 
 logger = logging.getLogger(__name__)
 
@@ -283,3 +284,25 @@ def search_words(request):
             status=500, 
             content_type='application/json'
         )
+
+def serve_flight_html(request, flight_html_file):
+    """
+    Serves a specific HTML file from the flights template directory.
+    """
+    template_name = os.path.join('main', 'flights', flight_html_file)
+    logger.info(f"Attempting to serve flight template: {template_name}")
+    try:
+        # Check if the file actually ends with .html for basic security
+        if not flight_html_file.lower().endswith('.html'):
+            logger.warning(f"Attempted access to non-HTML file: {flight_html_file}")
+            raise Http404("Not found")
+
+        # Render the specific template
+        return render(request, template_name)
+    except TemplateDoesNotExist:
+        logger.error(f"Flight template not found: {template_name}")
+        raise Http404("Flight data not found")
+    except Exception as e:
+        logger.error(f"Error serving flight template {template_name}: {str(e)}")
+        # Depending on your needs, you might want a different error page
+        raise Http404("Error loading flight data")
