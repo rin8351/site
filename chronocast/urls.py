@@ -24,7 +24,7 @@ from main import views as main_views
 # Non-localized URLs (like API endpoints)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('main.api_urls')),  # just 'api/' here
+    # path('api/', include('main.api_urls')), # Comment out or remove this line
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 
